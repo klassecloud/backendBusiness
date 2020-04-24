@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -16,7 +18,10 @@ import javax.persistence.Table;
 @NoArgsConstructor
 public class Conversation {
 
+    @Id
     private Long id;
 
+    @ManyToOne
     private Teacher teacher;
+
 }

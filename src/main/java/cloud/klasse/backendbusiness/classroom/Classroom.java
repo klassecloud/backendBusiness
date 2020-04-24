@@ -5,8 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 
 @Entity
@@ -16,10 +15,12 @@ import javax.persistence.Table;
 @NoArgsConstructor
 public class Classroom {
 
+    @Id
     private Long id;
 
     private String topic;
 
+    @ManyToOne
     private Teacher teacher;
 
     private String pushPublicKey;

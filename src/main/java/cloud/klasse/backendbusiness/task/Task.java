@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.sql.Timestamp;
 
@@ -17,6 +19,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class Task {
 
+    @Id
     private Long id;
 
     private String title;
@@ -25,6 +28,7 @@ public class Task {
 
     private Timestamp dueDate;
 
+    @ManyToOne
     private Subject subject;
 
 }
