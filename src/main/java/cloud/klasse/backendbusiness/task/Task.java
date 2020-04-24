@@ -25,6 +25,6 @@ public class Task {
 
     private Timestamp dueDate;
 
-    private Subject subjectId;
+    private Subject subject;
 
 }

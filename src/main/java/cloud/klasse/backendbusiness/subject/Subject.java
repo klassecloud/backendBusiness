@@ -24,9 +24,9 @@ public class Subject {
 
     private String description;
 
-    private Teacher teacherId;
+    private Teacher teacher;
 
-    private Conversation conversationId;
+    private Conversation conversation;
 
-    private Classroom classroomId;
+    private Classroom classroom;
 }

@@ -20,7 +20,7 @@ public class Classroom {
 
     private String topic;
 
-    private Teacher teacherId;
+    private Teacher teacher;
 
     private String pushPublicKey;
 

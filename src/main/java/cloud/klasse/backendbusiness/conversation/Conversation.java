@@ -18,5 +18,5 @@ public class Conversation {
 
     private Long id;
 
-    private Teacher teacherId;
+    private Teacher teacher;
 }

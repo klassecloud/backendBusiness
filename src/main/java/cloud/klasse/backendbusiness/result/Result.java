@@ -23,9 +23,9 @@ public class Result {
 
     private String comment;
 
-    private Task taskId;
+    private Task task;
 
-    private User userId;
+    private User user;
 
     private String state;
 }
