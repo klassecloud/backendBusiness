@@ -30,6 +30,7 @@ public class Task {
 
     @Id
     @GeneratedValue
+
     private Long id;
 
     @Column(nullable = false)
@@ -42,6 +43,7 @@ public class Task {
 
     @ManyToOne
     @JoinColumn(name = "Subjectid", nullable = false)
+
     private Subject subject;
 
     @OneToMany(mappedBy = "task")

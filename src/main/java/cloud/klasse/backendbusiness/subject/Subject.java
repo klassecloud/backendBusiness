@@ -7,7 +7,6 @@ import cloud.klasse.backendbusiness.teacher.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +18,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.List;
 
-
 @Entity
 @Table(name = "Subject")
 @Data
@@ -30,6 +28,9 @@ public class Subject {
     @Id
     @GeneratedValue
     private Long Id;
+
+    @javax.persistence.Id
+    private Long id;
 
     @Column(nullable = false)
     private String name;
