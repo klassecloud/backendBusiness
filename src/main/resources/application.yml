@@ -1,0 +1,6 @@
+#klasse:
+#  cloud:
+#    qr-code:
+#      format: PNG # default
+#      width: 100  # default
+#      height: 100 # default
