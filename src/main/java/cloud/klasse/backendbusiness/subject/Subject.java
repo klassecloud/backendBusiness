@@ -7,8 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 
 @Entity
@@ -18,15 +17,20 @@ import javax.persistence.Table;
 @NoArgsConstructor
 public class Subject {
 
-    private Long Id;
+    @javax.persistence.Id
+    private Long id;
 
     private String name;
 
     private String description;
 
+    @ManyToOne
     private Teacher teacher;
 
+    @OneToOne
     private Conversation conversation;
 
+    @ManyToOne
     private Classroom classroom;
+
 }

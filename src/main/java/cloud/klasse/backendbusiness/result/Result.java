@@ -6,8 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 
 @Entity
@@ -17,14 +16,17 @@ import javax.persistence.Table;
 @NoArgsConstructor
 public class Result {
 
+    @Id
     private Long id;
 
     private String title;
 
     private String comment;
 
+    @ManyToOne
     private Task task;
 
+    @OneToOne
     private User user;
 
     private String state;
