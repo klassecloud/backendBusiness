@@ -1,6 +1,8 @@
 plugins {
     id 'org.springframework.boot' version '2.2.6.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'org.sonarqube' version '2.8'
+    id 'jacoco'
     id 'java'
   //  id 'org.liquibase.gradle' version '2.0.2'
 }
@@ -36,15 +38,34 @@ dependencies {
     //liquibaseRuntime  'org.liquibase.ext:liquibase-hibernate5:3.8'
     //liquibaseRuntime  'org.springframework.boot:spring-boot-starter-data-jpa'
 
+    implementation 'com.google.zxing:javase:3.4.0'
     compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.assertj:assertj-core:3.15.0'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
 }
+
+sonarqube {
+    properties {
+        property 'sonar.coverage.jacoco.xmlReportPaths', 'build/reports/jacoco/test/jacocoTestReport.xml'
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled false
+        html.enabled false
+    }
+}
+
+test.finalizedBy jacocoTestReport
 
 test {
     useJUnitPlatform()

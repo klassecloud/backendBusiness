@@ -23,3 +23,9 @@ spring: # general spring settings
 #  liquibase:
 #    enabled:               false
 #    rollbackFile:          "liquibase-rollback-file.sql"
+#klasse:
+#  cloud:
+#    qr-code:
+#      format: PNG # default
+#      width: 100  # default
+#      height: 100 # default
