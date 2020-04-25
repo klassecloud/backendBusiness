@@ -58,7 +58,7 @@ public class TeacherServiceTest {
 
         assertEquals(1, teacher.getId());
         assertEquals(userNameMock, teacher.getUserName());
-        assertEquals(nickNameMock, teacher.getNickname());
+        assertEquals(nickNameMock, teacher.getNickName());
         assertEquals(emailMock, teacher.getEmail());
         assertEquals(passwordMock, teacher.getPassword());
         assertTrue(teacher.isValidated());
@@ -74,7 +74,7 @@ public class TeacherServiceTest {
         final Teacher teacher = teacherService.getTeacher(1);
 
         assertEquals(userNameMock, teacher.getUserName());
-        assertEquals(nickNameMock, teacher.getNickname());
+        assertEquals(nickNameMock, teacher.getNickName());
         assertEquals(emailMock, teacher.getEmail());
         assertEquals(passwordMock, teacher.getPassword());
         assertTrue(teacher.isValidated());
@@ -99,7 +99,7 @@ public class TeacherServiceTest {
 
         assertEquals(1, teacher.getId());
         assertEquals(userNameMock, teacher.getUserName());
-        assertEquals(nickNameMock, teacher.getNickname());
+        assertEquals(nickNameMock, teacher.getNickName());
         assertEquals(passwordMock, teacher.getPassword());
         assertTrue(teacher.isValidated());
     }
@@ -123,7 +123,7 @@ public class TeacherServiceTest {
 
         assertEquals(1, teacher.getId());
         assertEquals(emailMock, teacher.getEmail());
-        assertEquals(nickNameMock, teacher.getNickname());
+        assertEquals(nickNameMock, teacher.getNickName());
         assertEquals(passwordMock, teacher.getPassword());
         assertTrue(teacher.isValidated());
     }
@@ -154,7 +154,7 @@ public class TeacherServiceTest {
         final Teacher teacher = teacherService.updateTeacher(updateTeacherModel, 1L);
 
         assertEquals(userNameMock, teacher.getUserName());
-        assertEquals(nickNameMock, teacher.getNickname());
+        assertEquals(nickNameMock, teacher.getNickName());
         assertEquals(emailMock, teacher.getEmail());
 
     }
