@@ -18,7 +18,7 @@ pipeline {
         stage('Static code analysis') {
             steps {
                 withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_LOGIN_TOKEN')]) {
-                    sh "gradle sonarqube -Dsonar.login=$SONAR_LOGIN_TOKEN"
+                    sh "gradle sonarqube -Dsonar.login=$SONAR_LOGIN_TOKEN -Dsonar.branch=$BRANCH_NAME"
                 }
             }
             post {
