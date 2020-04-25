@@ -15,6 +15,10 @@ import org.springframework.stereotype.Repository;
  *  - deleteById
  *  - delete
  *  - deleteAll
+ *
+ * @since 0.0.1
+ *
+ * @see Repository
  */
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
