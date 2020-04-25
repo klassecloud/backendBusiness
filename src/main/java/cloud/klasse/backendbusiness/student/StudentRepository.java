@@ -1,4 +1,4 @@
-package cloud.klasse.backendbusiness.user;
+package cloud.klasse.backendbusiness.student;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -21,6 +21,6 @@ import org.springframework.stereotype.Repository;
  * @see Repository
  */
 @Repository
-public interface UserRepository extends CrudRepository<User, Long> {
-    User findByUserName (final String userName);
+public interface StudentRepository extends CrudRepository<Student, Long> {
+    Student findByUserName (final String userName);
 }
