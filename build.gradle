@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.2.6.RELEASE'
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
     id 'org.sonarqube' version '2.8'
+    id 'maven-publish'
     id 'jacoco'
     id 'java'
 }
@@ -9,6 +10,34 @@ plugins {
 group = 'cloud.klasse'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '14'
+
+publishing {
+    publications {
+        bootJava(MavenPublication) {
+            artifact bootJar
+        }
+    }
+    repositories {
+        maven {
+            url = "https://arts.build.ricksha.dev/artifactory/gradle-dev-local"
+            credentials {
+                username "${artifactory_user}"
+                password "${artifactory_password}"
+            }
+        }
+    }
+}
+
+repositories {
+    maven {
+        url = "https://arts.build.ricksha.dev/artifactory/gradle-dev"
+        credentials {
+            username "${artifactory_user}"
+            password "${artifactory_password}"
+        }
+    }
+    mavenCentral()
+}
 
 configurations {
     developmentOnly
@@ -18,10 +47,6 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
-}
-
-repositories {
-    mavenCentral()
 }
 
 dependencies {
