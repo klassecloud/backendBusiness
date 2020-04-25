@@ -1,3 +1,4 @@
+
 package cloud.klasse.backendbusiness.user;
 
 import java.util.Optional;
@@ -50,6 +51,19 @@ public class UserService {
         final Optional<User> optionalUser = userRepository.findById(id);
         log.info("Get user with id: {}", id);
         optionalUser.ifPresent((final User user) -> user.setPassword("****"));
+        return optionalUser;
+    }
+
+    public Optional<User> updateUser(final long id, final UpdateUserModel updateUserModel) {
+        final Optional<User> optionalUser = userRepository.findById(id);
+        log.info("Get user with id: {}", id);
+
+        optionalUser.ifPresent((final User user) -> {
+            user.setUserName(updateUserModel.getUserName());
+            user.setNickName(updateUserModel.getNickName());
+            userRepository.save(user);
+            log.info("Update user with id: {}", id);
+        });
         return optionalUser;
     }
 }
