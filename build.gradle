@@ -85,6 +85,8 @@ jacocoTestReport {
     }
 }
 
+test.finalizedBy jacocoTestReport
+
 test {
     useJUnitPlatform()
     reports.junitXml.enabled = true
