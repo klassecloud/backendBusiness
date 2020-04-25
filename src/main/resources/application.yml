@@ -2,6 +2,8 @@ server:
   port: 8080
 
 spring: # general spring settings
+#  liquibase:
+#    change-log: classpath:db/changelog-master.xml
   h2:
     console:
       enabled: true
@@ -9,20 +11,25 @@ spring: # general spring settings
     name: backend-business # application name
   datasource:
     ## url:                   jdbc:postgresql://localhost:5432/
-    url:                   jdbc:h2:file:./test
+    url:                   jdbc:h2:mem:test
     username:              sa
     password:
   jpa:
     hibernate:
-      ddl-auto:            none
+      ddl-auto: create-drop
     properties:
       hibernate:
         ## dialect:           org.hibernate.dialect.PostgreSQLDialect
         dialect:           org.hibernate.dialect.H2Dialect
         jdbc:
+
 #klasse:
 #  cloud:
 #    qr-code:
 #      format: PNG # default
 #      width: 100  # default
 #      height: 100 # default
+logging:
+  level:
+    root: INFO
+    org.springframework.security: INFO
