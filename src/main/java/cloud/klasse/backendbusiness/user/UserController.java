@@ -18,7 +18,6 @@ import lombok.extern.slf4j.Slf4j;
  *
  * <p>This class injects the user service.</p>
  *
- * @author sandra.gerberding
  * @since 0.0.1
  *
  * @see RestController

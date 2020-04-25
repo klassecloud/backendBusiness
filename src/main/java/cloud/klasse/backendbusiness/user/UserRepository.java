@@ -16,7 +16,6 @@ import org.springframework.stereotype.Repository;
  *  - delete
  *  - deleteAll
  *
- * @author sandra.gerberding
  * @since 0.0.1
  *
  * @see Repository

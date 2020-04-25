@@ -24,7 +24,6 @@ import java.util.List;
 /**
  * User database entity.
  *
- * @author sandra.gerberding
  * @since 0.0.1
  *
  * @see Entity

@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
  *
  * <p>This class injects the user repository.</p>
  *
- * @author sandra.gerberding
  * @since 0.0.1
  *
  * @see Service
@@ -42,9 +41,10 @@ public class UserService {
     }
 
     /**
-     * 
-     * @param id
-     * @return
+     * Get the user with the given id.
+     *
+     * @param id user id
+     * @return an optional of the user
      */
     Optional<User> getUser (final long id) {
         final Optional<User> optionalUser = userRepository.findById(id);
