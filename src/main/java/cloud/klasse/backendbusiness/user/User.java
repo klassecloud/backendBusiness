@@ -57,5 +57,11 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "Conversationid"))
     private List<Conversation> conversations;
 
-
+    public User(int id, String userName, String nickName, String password, boolean isActivated) {
+        this.id = id;
+        this.userName = userName;
+        this.nickName = nickName;
+        this.password = password;
+        this.isActivated = isActivated;
+    }
 }
