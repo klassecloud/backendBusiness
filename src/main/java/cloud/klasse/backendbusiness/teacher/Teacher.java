@@ -31,12 +31,6 @@ import java.util.List;
 @EqualsAndHashCode
 public class Teacher extends User {
 
-    @Id
-    @GeneratedValue
-    private long id;
-
-    @Column(nullable = false, unique = true)
-    private String userName;
 
     @Column(nullable = false)
     private String nickName;
@@ -60,16 +54,13 @@ public class Teacher extends User {
     private List<School> schools;
 
     public Teacher(long id, String userName, String nickname, String email, String password, boolean isValidated) {
-        this.id = id;
-        this.userName = userName;
-        this.nickname = nickname;
+        super(id, userName, password);
+        this.nickName = nickname;
         this.email = email;
-        this.password = password;
         this.isValidated = isValidated;
         this.subjects = new ArrayList<>();
         this.conversations = new ArrayList<>();
         this.schools = new ArrayList<>();
-
     }
 
 }
