@@ -1,6 +1,7 @@
 package cloud.klasse.backendbusiness.teacher;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -8,6 +9,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,6 +17,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
@@ -23,6 +26,9 @@ public class TeacherServiceTest {
 
     @InjectMocks
     private TeacherService teacherService;
+
+    @Mock
+    private PasswordEncoder passwordEncoder;
 
     @Mock
     private TeacherRepository teacherRepository;
@@ -39,7 +45,7 @@ public class TeacherServiceTest {
         nickNameMock = "nick";
         passwordMock = "pass";
         emailMock = "email@mock";
-        teacherMock = new Teacher (1, userNameMock, nickNameMock, emailMock, passwordMock, true);
+        teacherMock = new Teacher(1, userNameMock, nickNameMock, emailMock, passwordMock, true);
     }
 
     @Test
@@ -52,7 +58,14 @@ public class TeacherServiceTest {
         createTeacherModel.setEmail(emailMock);
         createTeacherModel.setPassword(passwordMock);
 
-        when(teacherRepository.save(any(Teacher.class))).thenReturn(teacherMock);
+        when(passwordEncoder.encode(anyString())).thenAnswer(
+                invocation -> StringUtils.reverse(invocation.getArgument(0, String.class))
+        );
+        when(teacherRepository.save(any(Teacher.class))).thenAnswer(invocation -> {
+            final var teacher = invocation.getArgument(0, Teacher.class);
+            teacher.setId(1);
+            return teacher;
+        });
 
         final Teacher teacher = teacherService.createTeacher(createTeacherModel);
 
@@ -60,8 +73,8 @@ public class TeacherServiceTest {
         assertEquals(userNameMock, teacher.getUserName());
         assertEquals(nickNameMock, teacher.getNickName());
         assertEquals(emailMock, teacher.getEmail());
-        assertEquals(passwordMock, teacher.getPassword());
-        assertTrue(teacher.isValidated());
+        assertEquals("ssap", teacher.getPassword());
+        assertFalse(teacher.isValidated());
 
     }
 
@@ -105,7 +118,7 @@ public class TeacherServiceTest {
     }
 
     @Test
-    @DisplayName("Testing get teacher with wrong email." )
+    @DisplayName("Testing get teacher with wrong email.")
     void testGetTeacherWithWrongEmail() {
 
         when(teacherRepository.findByEmail(anyString())).thenThrow(new TeacherNotFoundException("email@mock"));

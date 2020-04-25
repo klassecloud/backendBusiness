@@ -3,6 +3,7 @@ package cloud.klasse.backendbusiness.student;
 
 import java.util.Optional;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class StudentService {
 
+    private final PasswordEncoder passwordEncoder;
     /** injected student repository */
     private final StudentRepository studentRepository;
 
@@ -36,7 +38,8 @@ public class StudentService {
      * @since 0.0.1
      */
     Student createStudent (final CreateStudentModel createStudentModel) {
-        final Student student = studentRepository.save(new Student(0, createStudentModel.getUserName(), createStudentModel.getNickName(), createStudentModel.getPassword(), true));
+        final var encodedPassword = passwordEncoder.encode(createStudentModel.getPassword());
+        final Student student = studentRepository.save(new Student(0, createStudentModel.getUserName(), createStudentModel.getNickName(), encodedPassword, true));
         log.info("Create a student with id {}", student.getId());
         return student;
     }

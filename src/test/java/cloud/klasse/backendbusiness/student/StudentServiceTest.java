@@ -4,10 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 import java.util.Optional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,12 +17,16 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @ExtendWith(MockitoExtension.class)
 class StudentServiceTest {
 
     @InjectMocks
     private StudentService studentService;
+
+    @Mock
+    private PasswordEncoder passwordEncoder;
 
     @Mock
     private StudentRepository studentRepository;
@@ -48,7 +54,14 @@ class StudentServiceTest {
         createStudentModelMock.setNickName(nickNameMock);
         createStudentModelMock.setPassword(passwordMock);
 
-        when(studentRepository.save(any(Student.class))).thenReturn(studentMock);
+        when(passwordEncoder.encode(anyString())).thenAnswer(
+                invocation -> StringUtils.reverse(invocation.getArgument(0, String.class))
+        );
+        when(studentRepository.save(any(Student.class))).thenAnswer(invocation -> {
+            final var student = invocation.getArgument(0, Student.class);
+            student.setId(1);
+            return student;
+        });
 
         // when
         final Student createdStudent = studentService.createStudent(createStudentModelMock);
@@ -57,7 +70,7 @@ class StudentServiceTest {
         assertEquals (1, createdStudent.getId());
         assertEquals (userNameMock, createdStudent.getUserName());
         assertEquals (nickNameMock, createdStudent.getNickName());
-        assertEquals (passwordMock, createdStudent.getPassword());
+        assertEquals ("raboof", createdStudent.getPassword());
         assertTrue   (createdStudent.isActivated());
     }
 
