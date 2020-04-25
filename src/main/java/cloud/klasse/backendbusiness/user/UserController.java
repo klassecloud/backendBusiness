@@ -37,7 +37,7 @@ public class UserController {
      *
      * @since 0.0.1
      */
-    @PostMapping("/user")
+    @PostMapping("/register")
     public ResponseEntity<User> createUser (@RequestBody final CreateUserModel createUserModel) {
         final User user = userService.createUser(createUserModel);
         log.info("Created user with userName: {}", user.getUserName());

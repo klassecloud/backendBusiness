@@ -2,6 +2,8 @@ package cloud.klasse.backendbusiness;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,9 +14,11 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
+@EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final KeyPair keyPair;
+
 
     // TODO Inject key from environment?
     public SecurityConfiguration() throws NoSuchAlgorithmException {
@@ -37,9 +41,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    public void configure(final WebSecurity webSecurity) throws Exception {
+        webSecurity.ignoring().antMatchers("/login", "/register");
+    }
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests(authorize -> authorize
-                .anyRequest().permitAll())
+                .anyRequest().fullyAuthenticated())
                 .csrf().disable()
                 .formLogin().disable();
     }
