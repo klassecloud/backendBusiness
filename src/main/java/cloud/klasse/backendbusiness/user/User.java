@@ -17,7 +17,7 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name="Users")
+@Table(name="User")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Data
 @AllArgsConstructor
