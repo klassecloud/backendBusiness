@@ -16,8 +16,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.TestPropertySource;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -68,26 +71,62 @@ class BackendBusinessApplicationTests {
         assertThat(loginResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
 
         // Extract access token from Cookie
-        final var cookies = loginResponse.getHeaders().get(HttpHeaders.SET_COOKIE);
-        final var accessToken = findAccessToken(cookies);
-        assertThat(accessToken).isNotEmpty();
+        final var cookies = Cookie.parse(loginResponse.getHeaders().get(HttpHeaders.SET_COOKIE));
+        final var accessToken = cookies.stream().filter(cookie -> "token".equalsIgnoreCase(cookie.name)).findFirst().orElse(null);
+        assertThat(accessToken).isNotNull();
+        assertThat(accessToken.sameSite).isNotNull();
+        assertThat(accessToken.secure).isTrue();
+        assertThat(accessToken.httpOnly).isTrue();
 
         // Attempt to access protected resource WITH access token => Should be accepted
         final var getUserHeaders = new HttpHeaders();
-        getUserHeaders.set(HttpHeaders.COOKIE, String.format("token=%s", accessToken));
+        getUserHeaders.set(HttpHeaders.COOKIE, String.format("token=%s", accessToken.value));
         final var getUserRequest = new HttpEntity<>(getUserHeaders);
         final var getUserResponse = restTemplate.exchange("/user/1", HttpMethod.GET, getUserRequest, User.class);
         assertThat(getUserResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
-    private String findAccessToken(final List<String> cookies) {
-        if (null == cookies || cookies.isEmpty()) return "";
-        for (final String cookie : cookies) {
-            final var keyValuePair = cookie.split(";", 2)[0].split("=", 2);
-            if (!"token".equalsIgnoreCase(keyValuePair[0])) continue;
-            return keyValuePair[1];
+    protected static class Cookie {
+
+        private String name;
+        private String value;
+        private String sameSite;
+        private boolean secure;
+        private boolean httpOnly;
+
+        public static List<Cookie> parse(final List<String> cookies) {
+            if (cookies == null || cookies.isEmpty()) return Collections.emptyList();
+            return cookies.stream().map(Cookie::parse).collect(Collectors.toUnmodifiableList());
         }
-        return "";
+
+        public static Cookie parse(final String s) {
+            if (s == null) return null;
+            System.out.println("Parsing Cookie-String: " + s);
+            final var cookie = new Cookie();
+            final var cookieAttributes = s.split(";");
+            final var nameValuePair = cookieAttributes[0].split("=");
+            cookie.name = nameValuePair[0];
+            cookie.value = nameValuePair.length > 1 ? nameValuePair[1] : null;
+            System.out.println("New cookie: " + cookie.name + " = " + cookie.value);
+            final var attributes = Arrays.stream(cookieAttributes).map(String::trim).skip(1).collect(Collectors.toList());
+            for (final String attribute : attributes) {
+                if ("secure".equalsIgnoreCase(attribute)) {
+                    cookie.secure = true;
+                } else if ("HttpOnly".equalsIgnoreCase(attribute)) {
+                    cookie.httpOnly = true;
+                } else {
+                    System.out.println("Key-Value Pair: " + attribute);
+                    final var keyValue = attribute.split("=", 2);
+                    final var attributeName = keyValue[0];
+                    final var attributeValue = keyValue.length > 1 ? keyValue[1] : null;
+                    if ("SameSite".equalsIgnoreCase(attributeName)) {
+                        cookie.sameSite = attributeValue;
+                    }
+                }
+            }
+            return cookie;
+        }
+
     }
 
 }
