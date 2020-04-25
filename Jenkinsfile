@@ -9,14 +9,20 @@ pipeline {
 
     stages {
 
-        stage('Compile and test') {
+        stage('Compile and run tests') {
             steps {
-                sh "gradle clean check bootJar"
+                sh "gradle clean check"
             }
             post {
                 always {
                     junit 'build/test-results/test/*.xml'
                 }
+            }
+        }
+
+        stage('Build fat jar') {
+            steps {
+                sh "gradle bootJar"
             }
         }
 
