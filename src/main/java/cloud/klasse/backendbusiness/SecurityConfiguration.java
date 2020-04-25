@@ -1,24 +1,23 @@
 package cloud.klasse.backendbusiness;
 
+import cloud.klasse.backendbusiness.jwt.JwtAuthenticationFilter;
+import cloud.klasse.backendbusiness.jwt.JwtTokenVerifier;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
-import java.security.PublicKey;
+import java.security.*;
 
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final KeyPair keyPair;
-
 
     // TODO Inject key from environment?
     public SecurityConfiguration() throws NoSuchAlgorithmException {
@@ -41,16 +40,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(final WebSecurity webSecurity) throws Exception {
-        webSecurity.ignoring().antMatchers("/login", "/register");
-    }
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
+                .addFilterBefore(new JwtAuthenticationFilter(new JwtTokenVerifier(publicKey())), BasicAuthenticationFilter.class)
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests(authorize -> authorize
-                .anyRequest().fullyAuthenticated())
+                .authorizeRequests(authorize -> authorize
+                        .mvcMatchers(HttpMethod.POST, "/register").permitAll()
+                        .mvcMatchers(HttpMethod.GET, "/login").permitAll()
+                        .anyRequest().hasAnyAuthority(JwtAuthenticationFilter.TEACHER.getAuthority())
+                )
+
                 .csrf().disable()
-                .formLogin().disable();
+                .formLogin().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
 }

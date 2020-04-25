@@ -1,6 +1,7 @@
 package cloud.klasse.backendbusiness.jwt;
 
-import io.jsonwebtoken.Jwt;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class JwtTokenVerifier implements TokenVerifier {
     }
 
     @Override
-    public Jwt verifiedToken(String token) {
-       return  parser.parse(token);
+    public Jws<Claims> verifyToken(String token) {
+        return parser.parseClaimsJws(token);
     }
 }

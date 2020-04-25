@@ -1,8 +1,10 @@
 package cloud.klasse.backendbusiness.jwt;
 
-import io.jsonwebtoken.Jwt;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 
 public interface TokenVerifier {
 
-    Jwt verifiedToken(String token);
+    Jws<Claims> verifyToken(String token);
+
 }

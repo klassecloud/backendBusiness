@@ -1,33 +1,67 @@
 package cloud.klasse.backendbusiness.jwt;
 
-import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
+import org.springframework.stereotype.Service;
 
-import org.springframework.security.authentication.TestingAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.preauth.RequestHeaderAuthenticationFilter;
-
-
-import javax.servlet.*;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
+import java.util.List;
 
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+@Service
+public class JwtAuthenticationFilter extends AbstractPreAuthenticatedProcessingFilter {
 
-@RequiredArgsConstructor
-public class JwtAuthenticationFilter extends RequestHeaderAuthenticationFilter {
+    public static final SimpleGrantedAuthority TEACHER = new SimpleGrantedAuthority("TEACHER");
 
     private final TokenVerifier verifier;
 
-    @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        final var token = StringUtils.removeStart(((HttpServletRequest) request)
-                .getHeader(AUTHORIZATION), "Bearer").trim();
-
-        verifier.verifiedToken(token);
-        SecurityContextHolder.getContext()
-                .setAuthentication(new TestingAuthenticationToken("", "", ""));
+    public JwtAuthenticationFilter(final TokenVerifier verifier) {
+        this.verifier = verifier;
+        this.setAuthenticationManager(authenticationRequest -> new PreAuthenticatedAuthenticationToken(
+                authenticationRequest.getPrincipal(),
+                authenticationRequest.getCredentials(),
+                List.of(TEACHER)
+        ));
     }
 
+    @Override
+    protected Object getPreAuthenticatedPrincipal(HttpServletRequest request) {
+        final String bearerToken = extractBearerToken(request);
+
+        if (bearerToken == null) return null;
+
+        final var jwt = verifier.verifyToken(bearerToken);
+
+        return jwt.getBody().getSubject();
+    }
+
+    @Override
+    protected Object getPreAuthenticatedCredentials(HttpServletRequest request) {
+        return extractBearerToken(request);
+    }
+
+    private String extractBearerToken(HttpServletRequest httpServletRequest) {
+        final var authorization = searchAccessToken(httpServletRequest.getCookies());
+
+        if (authorization == null) {
+            return null;
+        }
+
+        return StringUtils
+                .removeStart(authorization, "Bearer")
+                .trim();
+    }
+
+    private String searchAccessToken(final Cookie[] cookies) {
+        if (cookies == null) return null;
+        for (final Cookie cookie : cookies) {
+            if (cookie != null && "token".equalsIgnoreCase(cookie.getName())) {
+                return cookie.getValue();
+            }
+        }
+        return null;
+    }
 
 }
