@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,7 +28,7 @@ public class Classroom {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private long id;
 
     @Column(nullable = false)
     private String topic;
@@ -45,4 +46,14 @@ public class Classroom {
 
     @OneToMany(mappedBy = "classroom")
     private List<Student> students;
+
+    public Classroom(long id, String topic, String pushPublicKey, String pushPrivateKey) {
+        this.id = id;
+        this.topic = topic;
+        this.teacher = new Teacher();
+        this.pushPublicKey = pushPublicKey;
+        this.pushPrivateKey = pushPrivateKey;
+        this.subjects = new ArrayList<>();
+        this.students = new ArrayList<>();
+    }
 }
