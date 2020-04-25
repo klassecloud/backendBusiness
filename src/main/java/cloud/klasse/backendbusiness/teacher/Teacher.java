@@ -15,6 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Column;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,6 +30,7 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode
 public class Teacher extends User {
+
 
     @Column(nullable = false)
     private String nickName;
@@ -50,5 +52,15 @@ public class Teacher extends User {
 
     @ManyToMany(mappedBy = "teachers")
     private List<School> schools;
+
+    public Teacher(long id, String userName, String nickname, String email, String password, boolean isValidated) {
+        super(id, userName, password);
+        this.nickName = nickname;
+        this.email = email;
+        this.isValidated = isValidated;
+        this.subjects = new ArrayList<>();
+        this.conversations = new ArrayList<>();
+        this.schools = new ArrayList<>();
+    }
 
 }
