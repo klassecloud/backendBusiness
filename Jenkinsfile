@@ -11,7 +11,7 @@ pipeline {
 
         stage('Compile and test') {
             steps {
-                sh "gradle check bootJar"
+                sh "gradle clean check bootJar"
             }
             post {
                 always {
