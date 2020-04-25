@@ -1,10 +1,10 @@
-package cloud.klasse.backendbusiness.user;
+package cloud.klasse.backendbusiness.student;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * User model to create an user.
+ * User model to create an student.
  *
  * @since 0.0.1
  *
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-public class CreateUserModel {
+public class CreateStudentModel {
     private String userName;
     private String nickName;
     private String password;

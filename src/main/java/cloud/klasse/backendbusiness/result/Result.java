@@ -2,7 +2,7 @@ package cloud.klasse.backendbusiness.result;
 
 import cloud.klasse.backendbusiness.file.File;
 import cloud.klasse.backendbusiness.task.Task;
-import cloud.klasse.backendbusiness.user.User;
+import cloud.klasse.backendbusiness.student.Student;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -40,8 +40,8 @@ public class Result {
     private Task task;
 
     @ManyToOne
-    @JoinColumn(name = "Userid", nullable = false)
-    private User user;
+    @JoinColumn(name = "Studentid", nullable = false)
+    private Student student;
 
     @Column(nullable = false)
     private String state;
