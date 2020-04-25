@@ -1,39 +1,22 @@
 package cloud.klasse.backendbusiness.user;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import cloud.klasse.backendbusiness.classroom.Classroom;
-import cloud.klasse.backendbusiness.conversation.Conversation;
-import cloud.klasse.backendbusiness.result.Result;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
 /**
  * User database entity.
  *
- * @since 0.0.1
- *
- * @see Entity
- * @see Table
- * @see Data
- * @see AllArgsConstructor
- * @see NoArgsConstructor
  */
-@Entity
-@Table(name = "User")
+@Entity(name = "User")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -47,36 +30,15 @@ public class User {
     private String userName;
 
     @Column(nullable = false)
-    private String nickName;
-
-    @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false, columnDefinition = "boolean")
-    private boolean isActivated = false;
+    @Column(nullable = false)
+    private String token;
 
-    @ManyToOne
-    @JoinColumn(name = "Classroomid")
-    private Classroom classroom;
-
-    @OneToMany(mappedBy = "user")
-    private List<Result> results;
-
-    @ManyToMany
-    @JoinTable(
-            name = "User_Conversation",
-            joinColumns = @JoinColumn(name = "Userid"),
-            inverseJoinColumns = @JoinColumn(name = "Conversationid"))
-    private List<Conversation> conversations;
-
-    public User(int id, String userName, String nickName, String password, boolean activated) {
+    public User(long id, String userName, String password) {
         this.id = id;
         this.userName = userName;
-        this.nickName = nickName;
         this.password = password;
-        this.isActivated = activated;
-        this.results = new ArrayList<>();
-        this.conversations = new ArrayList<>();
     }
 
 }

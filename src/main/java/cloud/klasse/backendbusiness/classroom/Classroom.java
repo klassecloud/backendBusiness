@@ -2,7 +2,7 @@ package cloud.klasse.backendbusiness.classroom;
 
 import cloud.klasse.backendbusiness.subject.Subject;
 import cloud.klasse.backendbusiness.teacher.Teacher;
-import cloud.klasse.backendbusiness.user.User;
+import cloud.klasse.backendbusiness.student.Student;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -44,5 +44,5 @@ public class Classroom {
     private List<Subject> subjects;
 
     @OneToMany(mappedBy = "classroom")
-    private List<User> users;
+    private List<Student> students;
 }
