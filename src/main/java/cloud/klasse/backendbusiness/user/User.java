@@ -18,6 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -57,5 +58,14 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "Conversationid"))
     private List<Conversation> conversations;
 
+    public User(int id, String userName, String nickName, String password, boolean activated) {
+        this.id = id;
+        this.userName = userName;
+        this.nickName = nickName;
+        this.password = password;
+        this.isActivated = activated;
+        this.results = new ArrayList<>();
+        this.conversations = new ArrayList<>();
+    }
 
 }

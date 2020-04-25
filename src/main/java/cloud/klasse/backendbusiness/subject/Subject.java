@@ -27,9 +27,6 @@ public class Subject {
 
     @Id
     @GeneratedValue
-    private Long Id;
-
-    @javax.persistence.Id
     private Long id;
 
     @Column(nullable = false)
