@@ -3,13 +3,14 @@ package cloud.klasse.backendbusiness.user;
 
 import java.util.Optional;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * User service to manage an user.
+ * User service to manage an user. Uses a spring-security {@link PasswordEncoder} to store the passwords.
  *
  * <p>This class injects the user repository.</p>
  *
@@ -24,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserService {
 
+    private final PasswordEncoder passwordEncoder;
     /** injected user repository */
     private final UserRepository userRepository;
 
@@ -36,7 +38,9 @@ public class UserService {
      * @since 0.0.1
      */
     User createUser (final CreateUserModel createUserModel) {
-        final User user = userRepository.save(new User(0, createUserModel.getUserName(), createUserModel.getNickName(), createUserModel.getPassword(), true));
+        final User user = userRepository.save(
+                new User(0, createUserModel.getUserName(), createUserModel.getNickName(), passwordEncoder.encode(createUserModel.getPassword()), true)
+        );
         log.info("Create a user with id {}", user.getId());
         return user;
     }
