@@ -1,6 +1,6 @@
 package cloud.klasse.backendbusiness;
 
-import cloud.klasse.backendbusiness.user.CreateUserModel;
+import cloud.klasse.backendbusiness.student.CreateStudentModel;
 import cloud.klasse.backendbusiness.user.User;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -48,11 +48,11 @@ class BackendBusinessApplicationTests {
         assertThat(unauthorizedResponse.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
 
         // Attempt to create user without access token => Should be accepted
-        final var createUserModel = new CreateUserModel();
+        final var createUserModel = new CreateStudentModel();
         createUserModel.setUserName("Klaus");
         createUserModel.setNickName("klaus");
         createUserModel.setPassword("It's super-cereal");
-        final var createUserResponse = restTemplate.postForEntity("/register", createUserModel, User.class);
+        final var createUserResponse = restTemplate.postForEntity("/user", createUserModel, User.class);
         assertThat(createUserResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 
         // Check created user data provided by the API
@@ -60,7 +60,6 @@ class BackendBusinessApplicationTests {
         assertThat(user).isNotNull();
         assertThat(user.getId()).isEqualTo(1);
         assertThat(user.getUserName()).isEqualTo("Klaus");
-        assertThat(user.getNickName()).isEqualTo("klaus");
 
         // Login using the provided credentials but no access token => Should be accepted
         final var loginHeaders = new HttpHeaders();
