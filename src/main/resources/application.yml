@@ -20,9 +20,6 @@ spring: # general spring settings
         ## dialect:           org.hibernate.dialect.PostgreSQLDialect
         dialect:           org.hibernate.dialect.H2Dialect
         jdbc:
-#  liquibase:
-#    enabled:               false
-#    rollbackFile:          "liquibase-rollback-file.sql"
 #klasse:
 #  cloud:
 #    qr-code:
