@@ -1,11 +1,11 @@
-package cloud.klasse.backendbusiness.user;
+package cloud.klasse.backendbusiness.student;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class UpdateUserModel {
+public class StudentUserModel {
     private String userName;
     private String nickName;
 }

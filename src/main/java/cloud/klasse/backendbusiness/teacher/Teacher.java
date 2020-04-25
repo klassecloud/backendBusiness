@@ -4,42 +4,37 @@ import cloud.klasse.backendbusiness.classroom.Classroom;
 import cloud.klasse.backendbusiness.conversation.Conversation;
 import cloud.klasse.backendbusiness.school.School;
 import cloud.klasse.backendbusiness.subject.Subject;
+import cloud.klasse.backendbusiness.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Column;
 import java.util.List;
 
+/**
+ * Teacher database entity.
+ *
+ */
 
 @Entity
 @Table(name = "Teacher")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Teacher {
-
-    @Id
-    @GeneratedValue
-    private Long id;
-
-    @Column(nullable = false, unique = true)
-    private String userName;
+@EqualsAndHashCode
+public class Teacher extends User {
 
     @Column(nullable = false)
-    private String nickname;
+    private String nickName;
 
     @Column(nullable = false, unique = true)
     private String email;
-
-    @Column(nullable = false)
-    private String password;
 
     @Column(nullable = false, columnDefinition = "boolean")
     private boolean isValidated;
