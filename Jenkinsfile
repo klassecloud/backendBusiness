@@ -13,9 +13,10 @@ pipeline {
             steps {
                 sh "gradle bootJar"
             }
-        } post {
-            always {
-                junit 'build/test-results/test/*.xml'
+            post {
+                always {
+                    junit 'build/test-results/test/*.xml'
+                }
             }
         }
 
