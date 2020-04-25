@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Column;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,7 +28,7 @@ public class Teacher {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private long id;
 
     @Column(nullable = false, unique = true)
     private String userName;
@@ -55,5 +56,18 @@ public class Teacher {
 
     @ManyToMany(mappedBy = "teachers")
     private List<School> schools;
+
+    public Teacher(long id, String userName, String nickname, String email, String password, boolean isValidated) {
+        this.id = id;
+        this.userName = userName;
+        this.nickname = nickname;
+        this.email = email;
+        this.password = password;
+        this.isValidated = isValidated;
+        this.subjects = new ArrayList<>();
+        this.conversations = new ArrayList<>();
+        this.schools = new ArrayList<>();
+
+    }
 
 }

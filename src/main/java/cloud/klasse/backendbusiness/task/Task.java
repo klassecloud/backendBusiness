@@ -30,7 +30,6 @@ public class Task {
 
     @Id
     @GeneratedValue
-
     private Long id;
 
     @Column(nullable = false)
