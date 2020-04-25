@@ -13,6 +13,10 @@ pipeline {
             steps {
                 sh "gradle bootJar"
             }
+        } post {
+            always {
+                junit 'build/test-results/test/*.xml'
+            }
         }
 
         stage('Static code analysis') {
