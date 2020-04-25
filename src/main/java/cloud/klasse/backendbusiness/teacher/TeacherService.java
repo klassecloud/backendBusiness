@@ -13,7 +13,7 @@ public class TeacherService {
 
     public Teacher createTeacher(final CreateTeacherModel model) {
         Teacher teacher = teacherRepository.save(new Teacher(0, model.getUserName(), model.getNickName(), model.getEmail(),
-                model.getPassword(), true));
+                model.getPassword(), false));
         log.info("Create a teacher with  id {}.", teacher.getId());
 
         return teacher;
