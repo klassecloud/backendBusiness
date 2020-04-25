@@ -21,6 +21,17 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * User database entity.
+ *
+ * @since 0.0.1
+ *
+ * @see Entity
+ * @see Table
+ * @see Data
+ * @see AllArgsConstructor
+ * @see NoArgsConstructor
+ */
 @Entity
 @Table(name = "User")
 @Data
