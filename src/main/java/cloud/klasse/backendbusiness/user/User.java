@@ -10,6 +10,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * User database entity.
+ *
+ * @author sandra.gerberding
+ * @since 0.0.1
+ *
+ * @see Entity
+ * @see Table
+ * @see Data
+ * @see AllArgsConstructor
+ * @see NoArgsConstructor
+ */
 @Entity
 @Table(name = "User")
 @Data
