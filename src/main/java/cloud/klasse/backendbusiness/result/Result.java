@@ -6,12 +6,12 @@ import cloud.klasse.backendbusiness.student.Student;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -36,11 +36,11 @@ public class Result {
     private String comment;
 
     @ManyToOne
-    @JoinColumn(name = "Taskid", nullable = false)
+    @ToString.Exclude
     private Task task;
 
     @ManyToOne
-    @JoinColumn(name = "Studentid", nullable = false)
+    @ToString.Exclude
     private Student student;
 
     @Column(nullable = false)

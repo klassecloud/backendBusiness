@@ -13,8 +13,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -42,13 +40,22 @@ public class Task {
     private Timestamp dueDate;
 
     @ManyToOne
+    @ToString.Exclude
     private Subject subject;
 
+    @OneToMany(mappedBy = "task")
     @ToString.Exclude
+    private List<Result> results;
+
     @ManyToMany
-    @JoinTable(
-            name = "Task_File",
-            joinColumns = @JoinColumn(name = "Taskid"),
-            inverseJoinColumns = @JoinColumn(name = "Fileid"))
+    @ToString.Exclude
     private List<File> files;
+
+    public Task(final Subject subject, final String title, final String content, final Timestamp dueDate) {
+        this.title = title;
+        this.content = content;
+        this.dueDate = dueDate;
+        this.subject = subject;
+    }
+
 }

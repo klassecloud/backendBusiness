@@ -3,6 +3,7 @@ package cloud.klasse.backendbusiness.school;
 import cloud.klasse.backendbusiness.teacher.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,11 +41,8 @@ public class School implements SchoolModel {
     @Column
     private Integer schoolId;
 
-    @ManyToMany
-    @JoinTable(
-            name = "Teacher_School",
-            joinColumns = @JoinColumn(name = "Schoolid"),
-            inverseJoinColumns = @JoinColumn(name = "Teacherid"))
+    @ManyToMany(mappedBy = "schools")
+    @ToString.Exclude
     private List<Teacher> teachers;
 
     public School() {

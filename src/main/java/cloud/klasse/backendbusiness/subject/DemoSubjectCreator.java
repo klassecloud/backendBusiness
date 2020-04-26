@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -37,8 +36,8 @@ public class DemoSubjectCreator implements ApplicationListener<ApplicationReadyE
         final var klaus = teacherRepository.save(new Teacher(0L, "klaus", "klaus", "klaus@klasse.cloud", passwordEncoder.encode("12345678"), true));
         final var classroom = classroomRepository.save(new Classroom(0L, "6B", "", "", klaus));
         final var math = subjectRepository.save(new Subject("Mathematik", "1 + 1 = 3 for large values of 1", classroom));
-        taskRepository.save(new Task(0L, "Tu was!", "Irgendwas!", Timestamp.valueOf(LocalDateTime.now().plusWeeks(2)), math, List.of()));
-        taskRepository.save(new Task(0L, "Tu noch was!", "Irgendwas anderes!", Timestamp.valueOf(LocalDateTime.now().plusWeeks(2)), math, List.of()));
+        taskRepository.save(new Task(math, "Tu was!", "Irgendwas!", Timestamp.valueOf(LocalDateTime.now().plusWeeks(2))));
+        taskRepository.save(new Task(math, "Tu noch was!", "Irgendwas anderes!", Timestamp.valueOf(LocalDateTime.now().plusWeeks(2))));
     }
 
 }

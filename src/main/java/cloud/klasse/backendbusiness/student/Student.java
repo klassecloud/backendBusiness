@@ -4,7 +4,11 @@ import cloud.klasse.backendbusiness.classroom.Classroom;
 import cloud.klasse.backendbusiness.conversation.Conversation;
 import cloud.klasse.backendbusiness.result.Result;
 import cloud.klasse.backendbusiness.user.User;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -36,18 +40,15 @@ public class Student extends User {
     private boolean isActivated = false;
 
     @ManyToOne
+    @ToString.Exclude
     private Classroom classroom;
 
-    @ToString.Exclude
     @OneToMany(mappedBy = "student")
+    @ToString.Exclude
     private List<Result> results;
 
-    @ToString.Exclude
     @ManyToMany
-    @JoinTable(
-            name = "Student_Conversation",
-            joinColumns = @JoinColumn(name = "Studentid"),
-            inverseJoinColumns = @JoinColumn(name = "Conversationid"))
+    @ToString.Exclude
     private List<Conversation> conversations;
 
     public Student(int id, String userName, String nickName, String password, boolean activated) {

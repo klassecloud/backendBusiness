@@ -35,18 +35,19 @@ public class Classroom {
     private String topic;
 
     @ManyToOne
+    @ToString.Exclude
     private Teacher teacher;
 
     private String pushPublicKey;
 
     private String pushPrivateKey;
 
-    @ToString.Exclude
     @OneToMany(mappedBy = "classroom")
+    @ToString.Exclude
     private List<Subject> subjects;
 
-    @ToString.Exclude
     @OneToMany(mappedBy = "classroom")
+    @ToString.Exclude
     private List<Student> students;
 
     public Classroom(long id, String topic, String pushPublicKey, String pushPrivateKey, Teacher teacher) {
