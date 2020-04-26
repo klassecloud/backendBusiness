@@ -1,6 +1,5 @@
 package cloud.klasse.backendbusiness.classroom;
 
-import cloud.klasse.backendbusiness.student.CreateStudentModel;
 import cloud.klasse.backendbusiness.teacher.Teacher;
 import cloud.klasse.backendbusiness.teacher.TeacherNotFoundException;
 import cloud.klasse.backendbusiness.teacher.TeacherRepository;

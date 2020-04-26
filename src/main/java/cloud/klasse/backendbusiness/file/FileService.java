@@ -23,7 +23,7 @@ public class FileService {
         try {
             // TODO: Check if the file's name contains invalid characters
             if(fileName.contains("..")) {
-                throw new RuntimeException("Sorry! Filename contains invalid path sequence " + fileName);
+                throw new FileUploadException("Sorry! Filename contains invalid path sequence " + fileName);
             }
 
             File dbFile = new File();
@@ -36,7 +36,7 @@ public class FileService {
 
             return fileRepository.save(dbFile);
         } catch (Exception ex) {
-            throw new RuntimeException("Could not store file " + fileName + ". Please try again!", ex);
+            throw new FileUploadException("Could not store file " + fileName + ". Please try again!", ex);
         }
     }
 

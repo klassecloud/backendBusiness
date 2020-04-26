@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class ClassroomController {
 
-    final private ClassroomService classroomService;
+    private final ClassroomService classroomService;
 
     /**
      * Post mapping {@link PostMapping} to create a classroom with the given request body {@link RequestBody} as

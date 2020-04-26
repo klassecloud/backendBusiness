@@ -4,8 +4,6 @@ import cloud.klasse.backendbusiness.jwt.JwtAuthenticationFilter;
 import cloud.klasse.backendbusiness.jwt.JwtTokenVerifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
