@@ -41,8 +41,7 @@ public class FileController {
     }
 
     @PostMapping(value = "/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public String uploadFile(@RequestParam("file") MultipartFile file,
-                                   RedirectAttributes redirectAttributes) {
+    public String uploadFile(@RequestParam("file") MultipartFile file) {
         File result = fileService.storeFile(file);
         return result.getId();
     }
