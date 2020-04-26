@@ -1,9 +1,16 @@
 package cloud.klasse.backendbusiness.classroom;
 
 import cloud.klasse.backendbusiness.student.CreateStudentModel;
+import cloud.klasse.backendbusiness.teacher.Teacher;
+import cloud.klasse.backendbusiness.teacher.TeacherNotFoundException;
+import cloud.klasse.backendbusiness.teacher.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Classroom service to manage an classroom.
@@ -23,6 +30,7 @@ public class ClassroomService {
 
     private final ClassroomRepository classroomRepository;
 
+    private final TeacherRepository teacherRepository;
 
     /**
      * Create an classroom with the given create classroom model {@link CreateClassroomModel}.
@@ -33,8 +41,16 @@ public class ClassroomService {
      * @since 0.0.1
      */
     public Classroom createClassroom(CreateClassroomModel createClassroomModel) {
+        String teacherUserName = Objects.toString(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        Optional<Teacher> teacher = teacherRepository.findByUserName(teacherUserName);
+
+        if(!teacher.isPresent()) {
+            log.info("Teacher {} was not found. Classroom can not be created.", teacherUserName);
+            throw new TeacherNotFoundException(teacherUserName);
+        }
+        //TO DO generate private/public key
         Classroom classroom = classroomRepository.save(new Classroom(0, createClassroomModel.getTopic(),
-                createClassroomModel.getPushPublicKey(), createClassroomModel.getPushPrivateKey()));
+                "publicKey", "privateKey", teacher.get()));
 
         log.info("Create a classroom with id {}.", classroom.getId());
 

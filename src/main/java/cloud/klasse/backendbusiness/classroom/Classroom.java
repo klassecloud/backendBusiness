@@ -47,10 +47,10 @@ public class Classroom {
     @OneToMany(mappedBy = "classroom")
     private List<Student> students;
 
-    public Classroom(long id, String topic, String pushPublicKey, String pushPrivateKey) {
+    public Classroom(long id, String topic, String pushPublicKey, String pushPrivateKey, Teacher teacher) {
         this.id = id;
         this.topic = topic;
-        this.teacher = new Teacher();
+        this.teacher = teacher;
         this.pushPublicKey = pushPublicKey;
         this.pushPrivateKey = pushPrivateKey;
         this.subjects = new ArrayList<>();
