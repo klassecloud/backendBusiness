@@ -1,6 +1,7 @@
 package cloud.klasse.backendbusiness.exception;
 
 import cloud.klasse.backendbusiness.classroom.ClassroomNotFoundException;
+import cloud.klasse.backendbusiness.task.TaskNotFoundException;
 import cloud.klasse.backendbusiness.teacher.TeacherNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -31,6 +32,13 @@ public class ErrorHandler {
     @ExceptionHandler(ClassroomNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String classroomNotFoundHandler(ClassroomNotFoundException ex) {
+        log.error("An exception is thrown!", ex);
+        return ex.getMessage();
+    }
+
+    @ExceptionHandler(TaskNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String taskNotFoundHandler(TaskNotFoundException ex) {
         log.error("An exception is thrown!", ex);
         return ex.getMessage();
     }

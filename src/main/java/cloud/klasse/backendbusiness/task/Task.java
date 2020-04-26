@@ -19,6 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -53,4 +54,15 @@ public class Task {
             joinColumns = @JoinColumn(name = "Taskid"),
             inverseJoinColumns = @JoinColumn(name = "Fileid"))
     private List<File> files;
+
+    public Task(long id, String title, String content, Timestamp dueDate) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.dueDate = dueDate;
+        this.subject = new Subject();//TO DO
+        this.results = new ArrayList<>();
+        this.files = new ArrayList<>();
+
+    }
 }
