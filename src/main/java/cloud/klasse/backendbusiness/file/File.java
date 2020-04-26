@@ -6,7 +6,7 @@ import cloud.klasse.backendbusiness.task.Task;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Lob;
 import java.util.List;
 
 @Entity
@@ -26,15 +27,17 @@ import java.util.List;
 public class File {
 
     @Id
-    @GeneratedValue
-    private Long id;
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    private String id;
 
     @Column(nullable = false)
-    private String title;
+    private String fileName;
 
     @Column(nullable = false)
     private String alt;
 
+    @Lob
     @Column(nullable = false)
     private byte[] content;
 
