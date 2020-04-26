@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,7 +28,7 @@ public class Result {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private long id;
 
     @Column(nullable = false)
     private String title;
@@ -48,5 +49,15 @@ public class Result {
 
     @OneToMany(mappedBy = "result")
     private List<File> files;
+
+    public Result(long id, String title, String comment, String state, Task task, Student student) {
+        this.id = id;
+        this.title = title;
+        this.comment = comment;
+        this.state = state;
+        this.task = task;
+        this.student = student;
+        this.files = new ArrayList<>();
+    }
 
 }

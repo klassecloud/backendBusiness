@@ -1,6 +1,5 @@
 package cloud.klasse.backendbusiness.classroom;
 
-import cloud.klasse.backendbusiness.student.CreateStudentModel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -37,7 +36,7 @@ public class ClassroomController {
 
     /**
      * Post mapping {@link PostMapping} to create a classroom with the given request body {@link RequestBody} as
-     * create classroom model {@link CreateStudentModel} and returns an classroom response entity {@link ResponseEntity}.
+     * create classroom model {@link CreateClassroomModel} and returns an classroom response entity {@link ResponseEntity}.
      *
      * @param createClassroomModel create classromm model
      * @return the response entity {@link ResponseEntity} of classroom
@@ -80,7 +79,7 @@ public class ClassroomController {
      */
     @PutMapping("/{id}")
     public ResponseEntity<Classroom> updateClassroom(@RequestBody final UpdateClassroomModel updateClassroomModel,
-                                                     final long id) {
+                                                     @PathVariable final long id) {
         final Classroom classroom = classroomService.updateClassroom(updateClassroomModel, id);
         return  new ResponseEntity<>(classroom, HttpStatus.OK);
     }
@@ -95,7 +94,7 @@ public class ClassroomController {
      * @since 0.0.1
      */
     @DeleteMapping("/{id}")
-    public void deleteClassroom(final long id) {
+    public void deleteClassroom(@PathVariable final long id) {
         classroomService.deleteClassroom(id);
     }
 }
