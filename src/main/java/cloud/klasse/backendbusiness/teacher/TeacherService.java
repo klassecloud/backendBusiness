@@ -2,6 +2,7 @@ package cloud.klasse.backendbusiness.teacher;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -9,11 +10,13 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class TeacherService {
 
+    private final PasswordEncoder passwordEncoder;
+
     private final TeacherRepository teacherRepository;
 
     public Teacher createTeacher(final CreateTeacherModel model) {
-        Teacher teacher = teacherRepository.save(new Teacher(0, model.getUserName(), model.getNickName(), model.getEmail(),
-                model.getPassword(), false));
+        final var encodedPasswor = passwordEncoder.encode(model.getPassword());
+        Teacher teacher = teacherRepository.save(new Teacher(0, model.getUserName(), model.getNickName(), model.getEmail(), encodedPasswor, false));
         log.info("Create a teacher with  id {}.", teacher.getId());
 
         return teacher;
@@ -52,7 +55,7 @@ public class TeacherService {
                     newTeacher.setEmail(updateTeacherModel.getEmail());
 
                     return teacherRepository.save(newTeacher);
-                } )
+                })
                 .orElseThrow(() -> new TeacherNotFoundException(id));
         log.info("Update teacher with id: {}.", teacher.getId());
 
