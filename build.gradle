@@ -99,4 +99,14 @@ test {
     reports.junitXml.enabled = true
 }
 
+task projectName {
+    doLast {
+        println project.name
+    }
+}
 
+task projectVersion {
+    doLast {
+        println project.version
+    }
+}
