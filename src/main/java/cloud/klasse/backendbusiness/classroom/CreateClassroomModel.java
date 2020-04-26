@@ -15,6 +15,4 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreateClassroomModel {
     private String topic;
-    private String pushPublicKey;
-    private String pushPrivateKey;
 }
