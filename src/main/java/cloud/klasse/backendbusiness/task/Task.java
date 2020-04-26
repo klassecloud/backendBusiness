@@ -7,6 +7,7 @@ import cloud.klasse.backendbusiness.subject.Subject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,12 +42,9 @@ public class Task {
     private Timestamp dueDate;
 
     @ManyToOne
-    @JoinColumn(name = "Subjectid", nullable = false)
     private Subject subject;
 
-    @OneToMany(mappedBy = "task")
-    private List<Result> results;
-
+    @ToString.Exclude
     @ManyToMany
     @JoinTable(
             name = "Task_File",

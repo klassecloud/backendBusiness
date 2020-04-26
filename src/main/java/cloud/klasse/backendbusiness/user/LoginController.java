@@ -24,7 +24,7 @@ public class LoginController {
     private final UserRepository userRepository;
 
     @GetMapping("/login")
-    public ResponseEntity<User> login(@RequestHeader(HttpHeaders.AUTHORIZATION) final String authorization) {
+    public ResponseEntity<LoginResult> login(@RequestHeader(HttpHeaders.AUTHORIZATION) final String authorization) {
         // TODO Add some validations to this chain of string manipulations...
         log.info("Authorization-Header: {}", authorization);
         final var credentials = new String(Base64.getDecoder().decode(authorization.split(" ", 2)[1])).split(":", 2);
@@ -43,7 +43,7 @@ public class LoginController {
                 // TODO Set SameSite=strict before merge
                 .header(HttpHeaders.SET_COOKIE, String.format("token=%s; HttpOnly; SameSite=lax; secure", token))
                 // TODO: Do not return the password. It's useful but not secure :)
-                .body(user);
+                .body(new LoginResult(user));
     }
 
 }

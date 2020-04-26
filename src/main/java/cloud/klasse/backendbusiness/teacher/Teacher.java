@@ -5,10 +5,7 @@ import cloud.klasse.backendbusiness.conversation.Conversation;
 import cloud.klasse.backendbusiness.school.School;
 import cloud.klasse.backendbusiness.subject.Subject;
 import cloud.klasse.backendbusiness.user.User;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -31,7 +28,6 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class Teacher extends User {
 
-
     @Column(nullable = false)
     private String nickName;
 
@@ -41,26 +37,19 @@ public class Teacher extends User {
     @Column(nullable = false, columnDefinition = "boolean")
     private boolean isValidated;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "teacher")
-    private List<Subject> subjects;
-
-    @OneToMany(mappedBy = "teacher")
-    private List<Conversation> conversations;
-
-    @OneToMany(mappedBy = "teacher")
-    private List<Classroom>  classrooms;
-
-    @ManyToMany(mappedBy = "teachers")
-    private List<School> schools;
+    private List<Classroom> classroom;
+//
+//    @OneToMany(mappedBy = "teacher")
+//    private List<Subject> subjects;
 
     public Teacher(long id, String userName, String nickname, String email, String password, boolean isValidated) {
         super(id, userName, password);
         this.nickName = nickname;
         this.email = email;
         this.isValidated = isValidated;
-        this.subjects = new ArrayList<>();
-        this.conversations = new ArrayList<>();
-        this.schools = new ArrayList<>();
+        this.classroom = new ArrayList<>();
     }
 
 }

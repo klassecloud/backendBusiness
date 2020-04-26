@@ -69,11 +69,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(new JwtAuthenticationFilter(new JwtTokenVerifier(publicKey())), BasicAuthenticationFilter.class)
 
                 .authorizeRequests(authorize -> authorize
-                        .mvcMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .mvcMatchers(HttpMethod.POST, "/user").permitAll()
-                        .mvcMatchers(HttpMethod.POST, "/teacher").permitAll()
-                        .mvcMatchers(HttpMethod.GET, "/login").permitAll()
-                        .anyRequest().hasAnyAuthority(JwtAuthenticationFilter.TEACHER.getAuthority())
+//                        .mvcMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+//                        .mvcMatchers(HttpMethod.POST, "/user").permitAll()
+//                        .mvcMatchers(HttpMethod.POST, "/teacher").permitAll()
+//                        .mvcMatchers(HttpMethod.GET, "/login").permitAll()
+//                        .anyRequest().hasAnyAuthority(JwtAuthenticationFilter.TEACHER.getAuthority())
+                        .anyRequest().permitAll()
                 )
 
                 .cors(Customizer.withDefaults())

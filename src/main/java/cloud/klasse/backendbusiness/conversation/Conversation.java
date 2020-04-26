@@ -31,15 +31,8 @@ public class Conversation {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name="Teacherid")
-    private Teacher teacher;
-
     @OneToMany(mappedBy = "conversation")
     private List<Message> messages;
-
-    @OneToOne(mappedBy = "conversation")
-    private Subject subject;
 
     @ManyToMany(mappedBy = "conversations")
     private List<Student> students;

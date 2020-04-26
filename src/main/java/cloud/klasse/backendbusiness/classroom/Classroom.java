@@ -6,6 +6,7 @@ import cloud.klasse.backendbusiness.student.Student;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,16 +35,17 @@ public class Classroom {
     private String topic;
 
     @ManyToOne
-    @JoinColumn(name = "Teacherid")
     private Teacher teacher;
 
     private String pushPublicKey;
 
     private String pushPrivateKey;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "classroom")
     private List<Subject> subjects;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "classroom")
     private List<Student> students;
 

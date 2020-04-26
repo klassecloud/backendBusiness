@@ -7,15 +7,10 @@ import cloud.klasse.backendbusiness.teacher.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import lombok.ToString;
+
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -34,18 +29,20 @@ public class Subject {
 
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "Teacherid", nullable = false)
-    private Teacher teacher;
-
-    @OneToOne
-    @JoinColumn(name = "Conversationid", referencedColumnName = "id", nullable = false)
-    private Conversation conversation;
+//    @ManyToOne
+//    private Teacher teacher;
 
     @ManyToOne
-    @JoinColumn(name = "Classroomid", nullable = false)
+    @ToString.Exclude
     private Classroom classroom;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "subject")
-    private List<Task> tasks;
+    private List<Task> tasks = new ArrayList<>();
+
+    public Subject(final String name, final String description, final Classroom classroom) {
+        this.name = name;
+        this.description = description;
+        this.classroom = classroom;
+    }
 }
