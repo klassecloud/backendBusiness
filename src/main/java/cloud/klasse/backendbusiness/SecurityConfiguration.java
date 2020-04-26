@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.security.*;
 import java.util.List;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -77,9 +79,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         .anyRequest().permitAll()
                 )
 
-                .cors(Customizer.withDefaults())
+                .cors(withDefaults())
                 .csrf().disable()
                 .formLogin().disable()
+
+                .headers().frameOptions().sameOrigin()
+                .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
